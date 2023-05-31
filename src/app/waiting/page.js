@@ -14,23 +14,15 @@ import Page404 from "../not-found";
 
 const Waiting = () => {
   let router = useRouter();
-  let id ;
-  let link = `signup/confirm/${id}`;
-  sessionStorage.removeItem('id')
-
-  //   console.log(location);
+  let id = sessionStorage.getItem('id');
 
   const routeChange = () => {
     let path = "/";
     router.push(path);
   };
-  useEffect(()=>{
-    sessionStorage.getItem('id')&&
-      id== sessionStorage.getItem('id')
-  },[])
   return (
     <>
-      {(id === null || id === undefined) ? <Page404/> :
+      { (id===null) ? <Page404/> :
         <>
           <ThemeProvider theme={themes}>
             <Container sx={{ height: "100vh", width: "100vw" }}>
@@ -45,7 +37,7 @@ const Waiting = () => {
                   {/* <h1>Thanks for signup. Please check your email.</h1> */}
                   <h1>Do not refresh page</h1>
                   <h1>Please Confirm by clicking here.</h1>
-                  <Link href={`/${link}`}>{link}</Link>
+                  <Link href={`/signup/confirm/${id}`}>Confirme Link</Link>
                 </Grid>
               </Box>
             </Container>

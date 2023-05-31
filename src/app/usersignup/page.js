@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import React from "react";
 import { Container, Divider, Toolbar } from "@mui/material";
 import Paper from "@mui/material/Paper";
@@ -12,13 +12,13 @@ import { Controller, useForm } from "react-hook-form";
 import { InputAdornment, IconButton } from "@mui/material";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
 import { MenuItem } from "@mui/material";
-import { useRouter } from "next/navigation";
 import PropTypes from "prop-types";
 import { NumericFormat } from "react-number-format";
 import { useEffect } from "react";
 import { IMaskInput } from "react-imask";
-import { IMask } from "react-imask";
+import {IMask} from "react-imask";
 import * as API from "../api/authenticate";
+import { useRouter } from "next/navigation";
 
 const momentFormat = 'YY/MM';
 const TextMaskCustom = React.forwardRef(function TextMaskCustom(props, ref) {
@@ -192,11 +192,9 @@ const Register = () => {
     event.preventDefault();
   };
 
-  let navigate = useRouter();
+  let router = useRouter();
   const routeChange = (temp,id) => {
-    console.log("router change is called:  id", id)
-    sessionStorage.setItem('id',id)
-    navigate.push(temp);
+    router.push(temp);
   };
 
   function alphaOnly(event) {
@@ -261,12 +259,13 @@ const Register = () => {
 
     API.onSignup(data)      
     .then((res) => {
-      console.log("response status : ",res.status)
+      console.log("response is : ",res)
       if (res.status === 201) {
         console.log(res);
         let data1 = res.data.confirmURL.split("/")
         let id = data1[3];
-        routeChange(`/signup/confirm`,id);
+        sessionStorage.setItem('id',id)
+        routeChange(`/waiting`);
       }
     })
     .catch((err) =>
